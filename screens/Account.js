@@ -1,10 +1,12 @@
 import React from "react";
 import { actionTypes } from "../Context/reducer";
 import { useStateValue } from "../Context/StateProvider";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
+import { ScrollView, View, Text, StyleSheet, Dimensions } from "react-native";
 import RoundButton from "../components/RoundButton";
 import { Header } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+const { width, height } = Dimensions.get("window");
 
 function Account({ navigation }) {
 	const [{ user }, userdispatch] = useStateValue();
@@ -30,39 +32,7 @@ function Account({ navigation }) {
 			/>
 			<ScrollView>
 				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
-					<RoundButton title="Logout" onPress={HandleLogout} />
-				</View>
-				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
-					<RoundButton title="Logout" onPress={HandleLogout} />
-				</View>
-				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
-					<RoundButton title="Logout" onPress={HandleLogout} />
-				</View>
-				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
-					<RoundButton title="Logout" onPress={HandleLogout} />
-				</View>
-				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
-					<RoundButton title="Logout" onPress={HandleLogout} />
-				</View>
-				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
-					<RoundButton title="Logout" onPress={HandleLogout} />
-				</View>
-				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
-					<RoundButton title="Logout" onPress={HandleLogout} />
-				</View>
-				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
-					<RoundButton title="Logout" onPress={HandleLogout} />
-				</View>
-				<View style={styles.container}>
-					<Text style={styles.text}>Account {user}</Text>
+					<Text style={styles.text}>Hello {user}</Text>
 					<RoundButton title="Logout" onPress={HandleLogout} />
 				</View>
 			</ScrollView>
@@ -77,10 +47,12 @@ const styles = StyleSheet.create({
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
+		minHeight: height - 10,
 	},
 	text: {
 		color: "#fff",
 		fontSize: 50,
+		marginBottom: 50,
 	},
 });
 export default Account;
