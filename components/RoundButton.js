@@ -8,7 +8,7 @@ function RoundButton({ title, onPress }) {
 			<Button
 				title={title}
 				onPress={onPress}
-				titleStyle={{ color: "#000", fontFamily: "poppons-regular" }}
+				titleStyle={{ color: "#000", fontFamily: "poppins-regular" }}
 				buttonStyle={styles.button}
 				containerStyle={styles.container}
 			/>

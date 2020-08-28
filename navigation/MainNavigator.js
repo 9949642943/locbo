@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet } from "react-native";
 import { useStateValue } from "../Context/StateProvider";
+import { Ionicons } from "@expo/vector-icons";
 
 const AuthStack = createStackNavigator();
 const HomeStack = createBottomTabNavigator();
@@ -14,6 +15,9 @@ import Login from "../screens/Login";
 import Mobconf from "../screens/Mobconf";
 import Nickname from "../screens/Nickname";
 import Signup from "../screens/Signup";
+import Search from "../screens/Search";
+import Chats from "../screens/Chats";
+import Account from "../screens/Account";
 
 function MainNavigator() {
 	const [initializing, setInitializing] = useState(true);
@@ -48,10 +52,33 @@ function MainNavigator() {
 			<HomeStack.Navigator
 				initialRouteName="Home"
 				tabBarOptions={{
-					backgroundColor: "#151818",
+					activeBackgroundColor: "#000000",
+					inactiveBackgroundColor: "#181515",
+					showLabel: false,
 				}}
+				screenOptions={({ route }) => ({
+					tabBarIcon: ({ focused, color, size }) => {
+						let iconName;
+
+						if (route.name === "Home") {
+							iconName = "ios-home";
+						} else if (route.name === "Search") {
+							iconName = "ios-search";
+						} else if (route.name === "Chats") {
+							iconName = "ios-text";
+						} else if (route.name === "Account") {
+							iconName = "ios-contact";
+						}
+
+						// You can return any component that you like here!
+						return <Ionicons name={iconName} size={size} color="#fff" />;
+					},
+				})}
 			>
 				<HomeStack.Screen name="Home" component={Home} />
+				<HomeStack.Screen name="Search" component={Search} />
+				<HomeStack.Screen name="Chats" component={Chats} />
+				<HomeStack.Screen name="Account" component={Account} />
 			</HomeStack.Navigator>
 		);
 }

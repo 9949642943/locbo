@@ -30,7 +30,7 @@ export default function App() {
 			<NavigationContainer>
 				<StateProvider initialState={initialState} reducer={reducer}>
 					<MainNavigator />
-					<StatusBar style="auto" />
+					<StatusBar backgroundColor="#181515" />
 				</StateProvider>
 			</NavigationContainer>
 		);
