@@ -1,0 +1,12 @@
+{
+  "name": "locbo",
+  "displayName": "locbo",
+  "expo": {
+    "name": "locbo",
+    "slug": "expo-template-bare",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
