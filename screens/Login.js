@@ -6,6 +6,12 @@ import LOCBO from "../components/LOCBO";
 import SecondaryHeader from "../components/SecondaryHeader";
 import RoundInput from "../components/RoundInput";
 import RoundButton from "../components/RoundButton";
+import axios from "axios";
+import { baseURL } from "../config";
+
+const api = axios.create({
+	baseURL: baseURL,
+});
 
 function Login({ navigation }) {
 	const [{ user }, userdispatch] = useStateValue();
@@ -13,10 +19,22 @@ function Login({ navigation }) {
 	const [input2, setinput2] = useState("");
 
 	const HandleLogin = () => {
-		userdispatch({
-			type: actionTypes.SET_USER,
-			user: input1,
-		});
+		api
+			.post("/users/login", {
+				username: input1,
+				password: input2,
+			})
+			.then((res) => {
+				if (res.data.success) {
+					userdispatch({
+						type: actionTypes.SET_USER,
+						user: { token: res.data.token, username: input1 },
+					});
+				}
+			})
+			.catch((err) => {
+				console.log("err", err);
+			});
 	};
 
 	return (
