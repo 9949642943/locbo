@@ -1,5 +1,8 @@
 export const initialState = {
-	user: null,
+	user: {
+		username: "sarat",
+		nickname: "Sarat Angajala",
+	},
 };
 
 export const actionTypes = {

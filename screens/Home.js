@@ -49,7 +49,7 @@ function Home({ navigation }) {
 					circleLoop
 				/>
 				<View style={styles.container}>
-					<Text style={styles.text}>Hello,{user}</Text>
+					<Text style={styles.text}>Hello,{user.nickname}</Text>
 				</View>
 			</ScrollView>
 		</SafeAreaView>

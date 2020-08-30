@@ -32,7 +32,9 @@ function Chats({ navigation }) {
 			/>
 			<ScrollView>
 				<View style={styles.container}>
-					<Text style={styles.text}>All chats of user:'{user}' go here</Text>
+					<Text style={styles.text}>
+						All chats of user:'{user.nickname}' go here
+					</Text>
 					<RoundButton title="Logout" onPress={HandleLogout} />
 				</View>
 			</ScrollView>

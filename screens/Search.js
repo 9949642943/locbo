@@ -24,7 +24,7 @@ function Search({ navigation }) {
 	};
 
 	return (
-		<SafeAreaView>
+		<SafeAreaView style={{ backgroundColor: "#181515" }}>
 			<Header
 				leftComponent={{
 					text: "LOCBO",
@@ -39,7 +39,13 @@ function Search({ navigation }) {
 				placeholder="Search Here..."
 				onChangeText={handleSearch}
 				value={search}
-				inputStyle={{ color: "#fff" }}
+				inputContainerStyle={{
+					backgroundColor: "#181515",
+					// borderWidth: 1,
+					// borderRadius: 20,
+				}}
+				inputStyle={{ color: "#fff", backgroundColor: "#181515" }}
+				containerStyle={{ backgroundColor: "#181515" }}
 			/>
 			<ScrollView>
 				<View style={styles.container}>

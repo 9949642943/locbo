@@ -32,7 +32,7 @@ function Account({ navigation }) {
 			/>
 			<ScrollView>
 				<View style={styles.container}>
-					<Text style={styles.text}>Hello {user}</Text>
+					<Text style={styles.text}>Hello {user.nickname}</Text>
 					<RoundButton title="Logout" onPress={HandleLogout} />
 				</View>
 			</ScrollView>
