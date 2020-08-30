@@ -4,8 +4,7 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import { Button } from "react-native-elements";
 import LOCBO from "../components/LOCBO";
 import SecondaryHeader from "../components/SecondaryHeader";
-import RoundInput from "../components/RoundInput";
-import RoundButton from "../components/RoundButton";
+import { LoginManager, AccessToken } from "react-native-fbsdk";
 
 function Signup({ navigation }) {
 	const [{ user }, userdispatch] = useStateValue();
@@ -16,8 +15,27 @@ function Signup({ navigation }) {
 	};
 
 	const Fsignin = () => {
-		console.log("Facebook sign in clicked");
-		navigation.navigate("AddPass");
+		LoginManager.logInWithPermissions(["public_profile"]).then(
+			(result) => {
+				if (result.isCancelled) {
+					console.log("Login cancelled");
+				} else {
+					console.log(
+						"Login success with permissions: " +
+							typeof result.grantedPermissions[0]
+					);
+					AccessToken.getCurrentAccessToken().then((data) => {
+						console.log("Access token is ", data.accessToken.toString());
+						navigation.push("AddPass", {
+							token: data.accessToken.toString(),
+						});
+					});
+				}
+			},
+			function (error) {
+				console.log("Login fail with error: " + error);
+			}
+		);
 	};
 
 	const Msignin = () => {

@@ -7,7 +7,6 @@ import MainNavigator from "./navigation/MainNavigator";
 import * as font from "expo-font";
 import { AppLoading } from "expo";
 import { NavigationContainer } from "@react-navigation/native";
-
 const getfonts = () => {
 	return font.loadAsync({
 		"Oleo-Script": require("./assets/fonts/OleoScript-Regular.ttf"),

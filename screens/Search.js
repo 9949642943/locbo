@@ -41,11 +41,16 @@ function Search({ navigation }) {
 				value={search}
 				inputContainerStyle={{
 					backgroundColor: "#181515",
-					// borderWidth: 1,
-					// borderRadius: 20,
+					borderWidth: 1,
+					borderBottomWidth: 1,
+					borderRadius: 20,
+					borderColor: "#E9EC6C",
 				}}
 				inputStyle={{ color: "#fff", backgroundColor: "#181515" }}
-				containerStyle={{ backgroundColor: "#181515" }}
+				containerStyle={{
+					backgroundColor: "#181515",
+					borderBottomWidth: 0,
+				}}
 			/>
 			<ScrollView>
 				<View style={styles.container}>

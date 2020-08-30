@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet } from "react-native";
 import { useStateValue } from "../Context/StateProvider";
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 
 const AuthStack = createStackNavigator();
 const HomeStack = createBottomTabNavigator();
@@ -52,26 +52,39 @@ function MainNavigator() {
 			<HomeStack.Navigator
 				initialRouteName="Home"
 				tabBarOptions={{
-					activeBackgroundColor: "#000000",
-					inactiveBackgroundColor: "#181515",
+					inactiveBackgroundColor: "#000000",
+					activeBackgroundColor: "#181515",
 					showLabel: false,
 				}}
 				screenOptions={({ route }) => ({
 					tabBarIcon: ({ focused, color, size }) => {
-						let iconName;
-
 						if (route.name === "Home") {
-							iconName = "ios-home";
+							return (
+								<MaterialCommunityIcons
+									name="home-outline"
+									size={size}
+									color="#fff"
+								/>
+							);
 						} else if (route.name === "Search") {
-							iconName = "ios-search";
+							return <Feather name="search" size={size} color="#fff" />;
 						} else if (route.name === "Chats") {
-							iconName = "ios-text";
+							return (
+								<MaterialCommunityIcons
+									name="chat-outline"
+									size={size}
+									color="#fff"
+								/>
+							);
 						} else if (route.name === "Account") {
-							iconName = "ios-contact";
+							return (
+								<MaterialCommunityIcons
+									name="account-circle-outline"
+									size={size}
+									color="#fff"
+								/>
+							);
 						}
-
-						// You can return any component that you like here!
-						return <Ionicons name={iconName} size={size} color="#fff" />;
 					},
 				})}
 			>

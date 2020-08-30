@@ -6,8 +6,8 @@ import LOCBO from "../components/LOCBO";
 import SecondaryHeader from "../components/SecondaryHeader";
 import RoundInput from "../components/RoundInput";
 import RoundButton from "../components/RoundButton";
-import axios from "axios";
 import { baseURL } from "../config";
+import axios from "axios";
 
 const api = axios.create({
 	baseURL: baseURL,
@@ -28,7 +28,11 @@ function Login({ navigation }) {
 				if (res.data.success) {
 					userdispatch({
 						type: actionTypes.SET_USER,
-						user: { token: res.data.token, username: input1 },
+						user: {
+							token: res.data.token,
+							username: res.data.username,
+							nickname: res.data.nickname,
+						},
 					});
 				}
 			})

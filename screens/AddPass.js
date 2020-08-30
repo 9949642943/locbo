@@ -7,10 +7,24 @@ import SecondaryHeader from "../components/SecondaryHeader";
 import RoundInput from "../components/RoundInput";
 import RoundButton from "../components/RoundButton";
 
-function AddPass({ navigation }) {
+function AddPass({ navigation, route }) {
 	const [{ user }, userdispatch] = useStateValue();
 	const [Password, setPassword] = useState("");
 	const [ConfPassword, setConfPassword] = useState("");
+	const [err, seterr] = useState("");
+
+	console.log("token is ", route.params.token);
+
+	const HandleSubmit = () => {
+		if (Password === ConfPassword) {
+			navigation.push("Nickname", {
+				token: route.params.token,
+				password: Password,
+			});
+		} else {
+			seterr("Password in both fields should be the same");
+		}
+	};
 
 	return (
 		<View style={styles.container}>
@@ -30,10 +44,7 @@ function AddPass({ navigation }) {
 					setConfPassword(value);
 				}}
 			/>
-			<RoundButton
-				title="Next"
-				onPress={() => navigation.navigate("Nickname")}
-			/>
+			<RoundButton title="Next" onPress={HandleSubmit} />
 			<Text
 				onPress={() => navigation.navigate("Login")}
 				style={styles.textlink}
