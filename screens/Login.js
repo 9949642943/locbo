@@ -58,6 +58,7 @@ function Login({ navigation }) {
 				onChangeText={(value) => {
 					setinput2(value);
 				}}
+				secureTextEntry={true}
 			/>
 			<RoundButton title="Sign In" onPress={HandleLogin} />
 			<View style={styles.textlinkcontainer}>

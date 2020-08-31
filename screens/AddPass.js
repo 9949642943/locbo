@@ -36,6 +36,7 @@ function AddPass({ navigation, route }) {
 				onChangeText={(value) => {
 					setPassword(value);
 				}}
+				secureTextEntry={true}
 			/>
 			<RoundInput
 				placeholder="Confirm Password"
@@ -43,6 +44,7 @@ function AddPass({ navigation, route }) {
 				onChangeText={(value) => {
 					setConfPassword(value);
 				}}
+				secureTextEntry={true}
 			/>
 			<RoundButton title="Next" onPress={HandleSubmit} />
 			<Text
