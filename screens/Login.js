@@ -28,11 +28,7 @@ function Login({ navigation }) {
 				if (res.data.success) {
 					userdispatch({
 						type: actionTypes.SET_USER,
-						user: {
-							token: res.data.token,
-							username: res.data.username,
-							nickname: res.data.nickname,
-						},
+						user: res.data,
 					});
 				}
 			})
@@ -40,6 +36,8 @@ function Login({ navigation }) {
 				console.log("err", err);
 			});
 	};
+
+	
 
 	return (
 		<View style={styles.container}>

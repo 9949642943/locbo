@@ -1,19 +1,23 @@
 import React from "react";
 import { actionTypes } from "../Context/reducer";
 import { useStateValue } from "../Context/StateProvider";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
-import RoundButton from "../components/RoundButton";
-import { Header } from "react-native-elements";
+import { ScrollView, View, Text, StyleSheet, Dimensions } from "react-native";
+import { Header, Button } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import CarouselItem from "../components/CarouselItem";
 import { SliderBox } from "react-native-image-slider-box";
+import { baseURL } from "../config";
+import { MaterialIcons } from "@expo/vector-icons";
+
+const { width, height } = Dimensions.get("window");
+
 function Home({ navigation }) {
 	const [{ user }, userdispatch] = useStateValue();
 
 	const images = [
-		"https://i.ibb.co/hYjK44F/anise-aroma-art-bazaar-277253.jpg",
-		"https://i.ibb.co/JtS24qP/food-inside-bowl-1854037.jpg",
-		"https://i.ibb.co/JxykVBt/flat-lay-photography-of-vegetable-salad-on-plate-1640777.jpg",
+		require("../assets/Logo.png"),
+		baseURL + "/images/carousel/1.PNG",
+		baseURL + "/images/carousel/2.PNG",
+		baseURL + "/images/carousel/3.PNG",
 	];
 
 	const HandleLogout = () => {
@@ -23,8 +27,12 @@ function Home({ navigation }) {
 		});
 	};
 
+	const HandlePOST = () => {
+		navigation.navigate("Post");
+	};
+
 	return (
-		<SafeAreaView>
+		<SafeAreaView style={{ flex: 1, backgroundColor: "#181515" }}>
 			<Header
 				leftComponent={{
 					text: "LOCBO",
@@ -38,20 +46,33 @@ function Home({ navigation }) {
 			<ScrollView>
 				<SliderBox
 					images={images}
-					sliderBoxHeight={200}
-					onCurrentImagePressed={(index) =>
-						console.warn(`image ${index} pressed`)
-					}
-					dotColor="#FFEE58"
-					inactiveDotColor="#90A4AE"
+					sliderBoxHeight={280}
+					dotStyle={{
+						display: "none",
+					}}
+					backgroundColor="#181515"
 					paginationBoxVerticalPadding={20}
 					autoplay
 					circleLoop
 				/>
 				<View style={styles.container}>
-					<Text style={styles.text}>Hello,{user.nickname}</Text>
+					<Text style={styles.text}>Hello,{user.user.nickname}</Text>
 				</View>
 			</ScrollView>
+			<View style={styles.iconContainer}>
+				<Button
+					icon={
+						<MaterialIcons
+							name="add-circle"
+							size={50}
+							color="gray"
+							style={styles.iconStyle}
+						/>
+					}
+					buttonStyle={{ backgroundColor: "rgba(0, 0, 0, 0)" }}
+					onPress={HandlePOST}
+				/>
+			</View>
 		</SafeAreaView>
 	);
 }
@@ -68,6 +89,12 @@ const styles = StyleSheet.create({
 	text: {
 		color: "#fff",
 		fontSize: 50,
+	},
+	iconContainer: {
+		position: "absolute",
+		bottom: 0,
+		alignSelf: "flex-end",
+		padding: 20,
 	},
 });
 export default Home;

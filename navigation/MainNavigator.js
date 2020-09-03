@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { useStateValue } from "../Context/StateProvider";
 import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 
@@ -10,7 +10,6 @@ const HomeStack = createBottomTabNavigator();
 
 import AddPass from "../screens/AddPass";
 import ConfOTP from "../screens/ConfOTP";
-import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Mobconf from "../screens/Mobconf";
 import Nickname from "../screens/Nickname";
@@ -18,6 +17,7 @@ import Signup from "../screens/Signup";
 import Search from "../screens/Search";
 import Chats from "../screens/Chats";
 import Account from "../screens/Account";
+import HomeNavigator from "./HomeNavigator";
 
 function MainNavigator() {
 	const [initializing, setInitializing] = useState(true);
@@ -28,14 +28,9 @@ function MainNavigator() {
 			<AuthStack.Navigator
 				initialRouteName="Login"
 				screenOptions={{
-					title: "LOCBO",
-					headerTintColor: "#fff",
+					headerRight: () => <Image src="../assets/Logo.png" />,
 					headerStyle: {
 						backgroundColor: "#181515",
-					},
-					headerTitleStyle: {
-						color: "#fff",
-						fontFamily: "Oleo-Script",
 					},
 				}}
 			>
@@ -88,7 +83,7 @@ function MainNavigator() {
 					},
 				})}
 			>
-				<HomeStack.Screen name="Home" component={Home} />
+				<HomeStack.Screen name="Home" component={HomeNavigator} />
 				<HomeStack.Screen name="Search" component={Search} />
 				<HomeStack.Screen name="Chats" component={Chats} />
 				<HomeStack.Screen name="Account" component={Account} />
