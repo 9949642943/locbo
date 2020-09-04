@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { actionTypes } from "../Context/reducer";
 import { useStateValue } from "../Context/StateProvider";
 import { ScrollView, View, Text, StyleSheet, Dimensions } from "react-native";
@@ -13,13 +13,7 @@ const { width, height } = Dimensions.get("window");
 
 function Home({ navigation }) {
 	const [{ user }, userdispatch] = useStateValue();
-
-	const images = [
-		require("../assets/Logo.png"),
-		baseURL + "/images/carousel/1.PNG",
-		baseURL + "/images/carousel/2.PNG",
-		baseURL + "/images/carousel/3.PNG",
-	];
+	const [image, setimage] = useState("");
 
 	const HandleLogout = () => {
 		userdispatch({
@@ -31,13 +25,16 @@ function Home({ navigation }) {
 	const HandlePOST = () => {};
 
 	const ImageUpload = () => {
+		console.log("Clicked");
 		ImagePicker.openPicker({
-			// multiple: true,
-			includeBase64: true,
+			// cropping: true,
+			// includeBase64: true,
 		})
 			.then((image) => {
 				var data = new FormData();
 				data.append("imageFile", image);
+zz
+				console.log("Into then");
 
 				var config = {
 					method: "post",
