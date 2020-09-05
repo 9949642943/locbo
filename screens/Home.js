@@ -10,6 +10,10 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
+
+
+
+
 function Home({ navigation }) {
 	const [{ user }, userdispatch] = useStateValue();
 

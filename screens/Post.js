@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { actionTypes } from "../Context/reducer";
 import { useStateValue } from "../Context/StateProvider";
-import { ScrollView, View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Alert } from "react-native";
 import { Header, Button, Avatar } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { baseURL } from "../config";
-import ImagePicker from "react-native-image-crop-picker";
+import ImagePicker from "react-native-image-picker";
 import axios from "axios";
-var FormData = require("form-data");
+import FormData, { Object } from "form-data";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,40 +24,51 @@ function Home({ navigation }) {
 
 	const HandlePOST = () => {};
 
+	const createFormData = (photo, body) => {
+		data.append("imageFile", {
+			name: photo.fileName,
+			type: photo.type,
+			uri:
+				Platform.OS === "android"
+					? photo.uri
+					: photo.uri.replace("file://", ""),
+		});
+
+		return data;
+	};
+
 	const ImageUpload = () => {
-		console.log("Clicked");
-		ImagePicker.openPicker({
-			// cropping: true,
-			// includeBase64: true,
-		})
-			.then((image) => {
-				var data = new FormData();
-				data.append("imageFile", image);
-zz
-				console.log("Into then");
-
-				var config = {
-					method: "post",
-					url: baseURL + "/imageUpload",
-					headers: {
-						Authorization: "Bearer " + user.token,
-					},
-					data: data,
-				};
-
-				console.log("Log data is", config);
-
-				axios(config)
-					.then(function (response) {
-						console.log("Respone is ", JSON.stringify(response.data));
+		ImagePicker.showImagePicker({ mediaType: "photo" }, (response) => {
+			if (response.didCancel) {
+				return;
+			} else if (response.error) {
+				console.log(response.error);
+			} else if (response.customButton) {
+				return;
+			} else {
+				const formData = new FormData();
+				formData.append("photo", {
+					name: response.path.split("/").pop(),
+					type: response.type,
+					uri:
+						Platform.OS === "android"
+							? "file://" + response.path
+							: response.path,
+				});
+				axios
+					.post(baseURL + "/imageUpload", formData, {
+						headers: { "Content-type": "multipart/form-data" },
 					})
-					.catch(function (error) {
-						console.log("Error is ", error);
+					.then((response) => {
+						console.log(JSON.parse(JSON.stringify(response.status)));
+						Alert.alert("Upload Post Successfully " + "");
+					})
+					.catch((error) => {
+						console.log(error);
+						Alert.alert("image Upload Post Failed  , Try again !");
 					});
-			})
-			.catch((error) => {
-				console.log("Error is ", error);
-			});
+			}
+		});
 	};
 
 	return (
