@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, Dimensions, Alert } from "react-native";
 import { Header, Button, Avatar } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { baseURL } from "../config";
-import ImagePicker from "react-native-image-picker";
+import ImagePicker from "react-native-image-crop-picker";
 import axios from "axios";
 import FormData, { Object } from "form-data";
 
@@ -13,7 +13,7 @@ const { width, height } = Dimensions.get("window");
 
 function Home({ navigation }) {
 	const [{ user }, userdispatch] = useStateValue();
-	const [image, setimage] = useState("");
+	const [images, setimages] = useState([]);
 
 	const HandleLogout = () => {
 		userdispatch({
@@ -38,37 +38,82 @@ function Home({ navigation }) {
 	};
 
 	const ImageUpload = () => {
-		ImagePicker.showImagePicker({ mediaType: "photo" }, (response) => {
-			if (response.didCancel) {
-				return;
-			} else if (response.error) {
-				console.log(response.error);
-			} else if (response.customButton) {
-				return;
-			} else {
-				const formData = new FormData();
-				formData.append("photo", {
-					name: response.path.split("/").pop(),
-					type: response.type,
-					uri:
-						Platform.OS === "android"
-							? "file://" + response.path
-							: response.path,
-				});
-				axios
-					.post(baseURL + "/imageUpload", formData, {
-						headers: { "Content-type": "multipart/form-data" },
-					})
-					.then((response) => {
-						console.log(JSON.parse(JSON.stringify(response.status)));
-						Alert.alert("Upload Post Successfully " + "");
-					})
-					.catch((error) => {
-						console.log(error);
-						Alert.alert("image Upload Post Failed  , Try again !");
-					});
-			}
-		});
+		Alert.alert(
+			"Select Source",
+			"Where do you want to select your image from?",
+			[
+				{
+					text: "Select From Device",
+					onPress: () => {
+						ImagePicker.openPicker({
+							cropping: true,
+							multiple: true,
+							writeTempFile: true,
+						}).then((images) => {
+							images.map((image) => {
+								const formData = new FormData();
+								formData.append("photo", {
+									name: image.path.split("/").pop(),
+									type: image.mime,
+									uri:
+										Platform.OS === "android"
+											? image.path
+											: image.path.replace("file://", ""),
+								});
+								axios
+									.post(baseURL + "/imageUpload", formData, {
+										headers: { "Content-type": "multipart/form-data" },
+									})
+									.then((response) => {
+										setimages([...images, response.data.uri]);
+									})
+									.catch((error) => {
+										Alert.alert("image Upload Post Failed  , Try again !");
+									});
+							});
+						});
+					},
+					style: "default",
+				},
+				{
+					text: "Open Camera?",
+					onPress: () => {
+						ImagePicker.openCamera({
+							multiple: true,
+							cropping: true,
+						})
+							.then((images) => {
+								images.map((image) => {
+									const formData = new FormData();
+									formData.append("photo", {
+										name: image.path.split("/").pop(),
+										type: image.mime,
+										uri:
+											Platform.OS === "android"
+												? image.path
+												: image.path.replace("file://", ""),
+									});
+									axios
+										.post(baseURL + "/imageUpload", formData, {
+											headers: { "Content-type": "multipart/form-data" },
+										})
+										.then((response) => {
+											setimages([...images, response.data.uri]);
+										})
+										.catch((error) => {
+											Alert.alert("image Upload Post Failed  , Try again !");
+										});
+								});
+							})
+							.catch((err) => {
+								console.log(err);
+							});
+					},
+					style: "default",
+				},
+			],
+			{ cancelable: true }
+		);
 	};
 
 	return (
