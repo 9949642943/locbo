@@ -14,11 +14,7 @@ function Nickname({ navigation, route }) {
 	const [{ user }, userdispatch] = useStateValue();
 	const [Nickname, setNickname] = useState("");
 
-	console.log("nickname token is ", route.params.token);
-	console.log("password is ", route.params.password);
-
 	const HandleSubmit = () => {
-		console.log("HAndling Submit");
 		const config = {
 			method: "post",
 			url: baseURL + "/users/facebook/token",
@@ -31,7 +27,6 @@ function Nickname({ navigation, route }) {
 				nickname: Nickname,
 			},
 		};
-		console.log(config);
 		axios(config)
 			.then((res) => {
 				if (res.data.success) {
@@ -39,8 +34,7 @@ function Nickname({ navigation, route }) {
 						type: actionTypes.SET_USER,
 						user: {
 							token: res.data.token,
-							username: Nickname,
-							nickname: Nickname,
+							user: res.data.user,
 						},
 					});
 				}

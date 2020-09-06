@@ -13,8 +13,6 @@ function AddPass({ navigation, route }) {
 	const [ConfPassword, setConfPassword] = useState("");
 	const [err, seterr] = useState("");
 
-	console.log("token is ", route.params.token);
-
 	const HandleSubmit = () => {
 		if (Password === ConfPassword) {
 			navigation.push("Nickname", {

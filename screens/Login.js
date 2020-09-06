@@ -33,11 +33,10 @@ function Login({ navigation }) {
 				}
 			})
 			.catch((err) => {
+				Alert.alert("Please Enter the correct username and password");
 				console.log("err", err);
 			});
 	};
-
-	
 
 	return (
 		<View style={styles.container}>
